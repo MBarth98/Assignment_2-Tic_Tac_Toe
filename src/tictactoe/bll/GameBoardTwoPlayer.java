@@ -1,5 +1,6 @@
 package tictactoe.bll;
 
+
 /**
  * The GameBoardTwoPlayer class is the mandatory implementation for the TicTacToe assignment.
  * It is used for games where there are two human players.
@@ -8,7 +9,7 @@ public class GameBoardTwoPlayer implements IGameModel {
 
     int[][] GameBoardMatrix = new int[3][3];
 
-    private int CourentPlayer = 0;
+    private int currentPlayer = 0;
     private int CountRound = 0;
 
 
@@ -18,7 +19,6 @@ public class GameBoardTwoPlayer implements IGameModel {
             for (int k = 0; k < 3; k++)
             {
                 GameBoardMatrix[i][k] = -1;
-                System.out.println(GameBoardMatrix[i][k]);
             }
         }
     }
@@ -31,11 +31,11 @@ public class GameBoardTwoPlayer implements IGameModel {
     @Override
     public int getNextPlayer() {
         if (CountRound % 2==0)
-            CourentPlayer = 0;
+            currentPlayer = 0;
         else
-            CourentPlayer = 1;
+            currentPlayer = 1;
 
-        return CourentPlayer;
+        return currentPlayer;
 
     }
 
@@ -51,22 +51,18 @@ public class GameBoardTwoPlayer implements IGameModel {
      */
     @Override
     public boolean play(int col, int row) {
-        CountRound++;
+
 
         //TODO Implement this method
 
-        //Delete after player function is impletmentet.
-        int player = 0;
-
-        if (/*todo player selection viabel*/ player == 0 && getPlayerAt(col,row) == -1){
+        if (currentPlayer == 0 && getPlayerAt(col,row) == -1){
             GameBoardMatrix[col][row] = 0;
-            player = 1;
-            System.out.println(GameBoardMatrix[col][row]);
+            CountRound++;
             return true;
         }
-        else if (player == 1 && getPlayerAt(col,row) == -1){
+        else if (currentPlayer == 1 && getPlayerAt(col,row) == -1){
             GameBoardMatrix[col][row] = 1;
-            player = 0;
+            CountRound++;
             return true;
         }
 
@@ -141,6 +137,14 @@ public class GameBoardTwoPlayer implements IGameModel {
     @Override
     public void newGame() {
         //TODO Implement this method
+        for (int i = 0; i < 3; i++)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                System.out.println(GameBoardMatrix[i][k]);
+                GameBoardMatrix[i][k] = -1;
+            }
+        }
     }
 
     /**
@@ -152,8 +156,7 @@ public class GameBoardTwoPlayer implements IGameModel {
      */
     @Override
     public int getPlayerAt(int col, int row) {
-        //TODO Implement this method
-        return -1;
+        return GameBoardMatrix[col][row];
     }
 
 }
