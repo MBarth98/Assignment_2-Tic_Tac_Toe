@@ -5,6 +5,8 @@ package tictactoe.bll;
  * It is used for games where there are two human players.
  */
 public class GameBoardTwoPlayer implements IGameModel {
+    private int CourentPlayer = 0;
+    private int CountRound = 0;
 
     protected GameBoardTwoPlayer() {
 
@@ -17,8 +19,13 @@ public class GameBoardTwoPlayer implements IGameModel {
      */
     @Override
     public int getNextPlayer() {
-        //TODO Implement this method
-        return 0;
+        if (CountRound % 2==0)
+            CourentPlayer = 0;
+        else
+            CourentPlayer = 1;
+
+        return CourentPlayer;
+
     }
 
     /**
@@ -33,7 +40,7 @@ public class GameBoardTwoPlayer implements IGameModel {
      */
     @Override
     public boolean play(int col, int row) {
-        //TODO Implement this method
+        CountRound++;
         return true;
     }
 
