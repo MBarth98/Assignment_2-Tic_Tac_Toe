@@ -34,6 +34,11 @@ public class GameBoardSinglePlayer implements IGameModel {
     @Override
     public boolean play(int col, int row) {
         //TODO Implement this method
+        if (col == 1){
+            System.out.println("Placed");
+
+            return true;
+        }
         return false;
     }
 
