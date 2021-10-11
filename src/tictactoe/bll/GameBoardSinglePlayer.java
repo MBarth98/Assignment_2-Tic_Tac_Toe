@@ -5,11 +5,18 @@ package tictactoe.bll;
  * It is used for games where there are one human player vs. a computer player.
  */
 public class GameBoardSinglePlayer implements IGameModel {
-private int CourentPlayer = 0;
+private int currentPlayer = 0;
 private int CountRound = 0;
+    int[][] GameBoardMatrix = new int[3][3];
 
     protected GameBoardSinglePlayer() {
-
+        for (int i = 0; i < 3; i++)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                GameBoardMatrix[i][k] = -1;
+            }
+        }
     }
 
     /**
@@ -20,11 +27,11 @@ private int CountRound = 0;
     @Override
     public int getNextPlayer() {
         if (CountRound % 2==0)
-            CourentPlayer = 0;
+            currentPlayer = 0;
         else
-            CourentPlayer = 1;
+            currentPlayer = 1;
 
-        return CourentPlayer;
+        return currentPlayer;
     }
 
 
@@ -42,11 +49,26 @@ private int CountRound = 0;
     public boolean play(int col, int row) {
         //TODO Implement this method
         CountRound++;
+
+        //TODO Implement this method
+
+        if (currentPlayer == 0 && getPlayerAt(col,row) == -1){
+            GameBoardMatrix[col][row] = 0;
+            System.out.println(GameBoardMatrix[col][row]);
+            return true;
+        }
+        else if (currentPlayer == 1 && getPlayerAt(col,row) == -1){
+            GameBoardMatrix[col][row] = 1;
+            return true;
+        }
+
         if (col == 1){
             System.out.println("Placed");
 
             return true;
         }
+        System.out.println("Something went wrong");
+
         return false;
     }
 
@@ -78,7 +100,14 @@ private int CountRound = 0;
      */
     @Override
     public void newGame() {
-        //TODO Implement this method
+        for (int i = 0; i < 3; i++)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                System.out.println(GameBoardMatrix[i][k]);
+                GameBoardMatrix[i][k] = -1;
+            }
+        }
     }
 
     /**
@@ -90,7 +119,6 @@ private int CountRound = 0;
      */
     @Override
     public int getPlayerAt(int col, int row) {
-        //TODO Implement this method
-        return -1;
+        return GameBoardMatrix[col][row];
     }
 }
