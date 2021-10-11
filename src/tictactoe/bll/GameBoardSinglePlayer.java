@@ -70,7 +70,7 @@ private int CountRound = 0;
     @Override
     public int getWinner() {
         //TODO Implement this method
-        return 0;
+        return -1;
     }
 
     /**
