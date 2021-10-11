@@ -5,6 +5,8 @@ package tictactoe.bll;
  * It is used for games where there are one human player vs. a computer player.
  */
 public class GameBoardSinglePlayer implements IGameModel {
+private int CourentPlayer = 0;
+private int CountRound = 0;
 
     protected GameBoardSinglePlayer() {
 
@@ -17,9 +19,14 @@ public class GameBoardSinglePlayer implements IGameModel {
      */
     @Override
     public int getNextPlayer() {
-        //TODO Implement this method
-        return 0;
+        if (CountRound % 2==0)
+            CourentPlayer = 0;
+        else
+            CourentPlayer = 1;
+
+        return CourentPlayer;
     }
+
 
     /**
      * Attempts to let the current player play at the given coordinates. If the
@@ -34,6 +41,7 @@ public class GameBoardSinglePlayer implements IGameModel {
     @Override
     public boolean play(int col, int row) {
         //TODO Implement this method
+        CountRound++;
         if (col == 1){
             System.out.println("Placed");
 

@@ -7,7 +7,13 @@ import java.util.Arrays;
  * It is used for games where there are two human players.
  */
 public class GameBoardTwoPlayer implements IGameModel {
+
     int[][] GameBoardMatrix = new int[3][3];
+
+    private int CourentPlayer = 0;
+    private int CountRound = 0;
+
+
     protected GameBoardTwoPlayer() {
         for (int i = 0; i < 3; i++)
         {
@@ -26,8 +32,13 @@ public class GameBoardTwoPlayer implements IGameModel {
      */
     @Override
     public int getNextPlayer() {
-        //TODO Implement this method
-        return 0;
+        if (CountRound % 2==0)
+            CourentPlayer = 0;
+        else
+            CourentPlayer = 1;
+
+        return CourentPlayer;
+
     }
 
     /**
@@ -42,6 +53,8 @@ public class GameBoardTwoPlayer implements IGameModel {
      */
     @Override
     public boolean play(int col, int row) {
+        CountRound++;
+
         //TODO Implement this method
 
         //Delete after player function is impletmentet.
@@ -65,6 +78,7 @@ public class GameBoardTwoPlayer implements IGameModel {
             return true;
         }
         System.out.println("Something went wrong");
+
         return false;
     }
 
