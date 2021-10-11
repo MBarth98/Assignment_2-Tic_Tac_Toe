@@ -53,17 +53,18 @@ public class GameBoardTwoPlayer implements IGameModel {
      */
     @Override
     public boolean play(int col, int row) {
-        CountRound++;
+
 
         //TODO Implement this method
 
         if (currentPlayer == 0 && getPlayerAt(col,row) == -1){
             GameBoardMatrix[col][row] = 0;
-            System.out.println(GameBoardMatrix[col][row]);
+            CountRound++;
             return true;
         }
         else if (currentPlayer == 1 && getPlayerAt(col,row) == -1){
             GameBoardMatrix[col][row] = 1;
+            CountRound++;
             return true;
         }
 
