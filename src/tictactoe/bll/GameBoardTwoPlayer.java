@@ -9,8 +9,11 @@ public class GameBoardTwoPlayer implements IGameModel {
 
     int[][] GameBoardMatrix = new int[3][3];
 
+    private int currentWinner = -1;
+
     private int currentPlayer = 0;
     private int CountRound = 0;
+    private int Draw;
 
 
     protected GameBoardTwoPlayer() {
@@ -53,8 +56,6 @@ public class GameBoardTwoPlayer implements IGameModel {
     public boolean play(int col, int row) {
 
 
-        //TODO Implement this method
-
         if (currentPlayer == 0 && getPlayerAt(col,row) == -1){
             GameBoardMatrix[col][row] = 0;
             CountRound++;
@@ -83,39 +84,56 @@ public class GameBoardTwoPlayer implements IGameModel {
      * @return true if the game is over, else it will return false.
      */
     @Override
-    public boolean isGameOver() {
+    public boolean isGameOver()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            int left    = GameBoardMatrix[i][0];
+            int middle  = GameBoardMatrix[i][1];
+            int right   = GameBoardMatrix[i][2];
 
-        for (int i =0; i <3;i++){
-            boolean xy= GameBoardMatrix[i][0]==GameBoardMatrix[i][1];
-            boolean xz= GameBoardMatrix[i][0]==GameBoardMatrix[i][2];
-            boolean yz= GameBoardMatrix[i][1]==GameBoardMatrix[i][2];
+            int top     = GameBoardMatrix[0][i];
+            int center  = GameBoardMatrix[1][i];
+            int bottom  = GameBoardMatrix[2][i];
 
-           if (xy && xz && yz)
-               return true;
-        }
-        for (int i =0; i <3;i++) {
-            boolean xy = GameBoardMatrix[0][i] == GameBoardMatrix[1][i];
-            boolean xz = GameBoardMatrix[0][i] == GameBoardMatrix[2][i];
-            boolean yz = GameBoardMatrix[1][i] == GameBoardMatrix[2][i];
+            boolean rowFull = (left != -1 && middle != -1 && right != -1);
+            boolean rowEqual = rowFull && (left == middle && left == right);
 
-            if (xy && xz && yz)
+            boolean colFull = (top != -1 && center != -1 && bottom != -1);
+            boolean colEqual = colFull && (top == center && top == bottom);
+
+            if (rowEqual||colEqual)
+            {
+                currentWinner = left;
+                System.out.println("gameover");
+
                 return true;
+            }
+
 
         }
 
-            boolean xy= GameBoardMatrix[0][0]==GameBoardMatrix[1][1];
-            boolean xz= GameBoardMatrix[0][0]==GameBoardMatrix[2][2];
-            boolean yz= GameBoardMatrix[1][1]==GameBoardMatrix[2][2];
+        int topLeft     = GameBoardMatrix[0][0];
+        int bottomRight = GameBoardMatrix[2][2];
+        int center      = GameBoardMatrix[1][1];
 
-            if (xy && xz && yz)
-                return true;
+        int topRight = GameBoardMatrix[2][0];
+        int bottomLeft = GameBoardMatrix[0][2];
 
-         xy= GameBoardMatrix[2][0]==GameBoardMatrix[1][1];
-         xz= GameBoardMatrix[2][0]==GameBoardMatrix[0][2];
-         yz= GameBoardMatrix[1][1]==GameBoardMatrix[0][2];
 
-        if (xy && xz && yz)
+        boolean rowFull = (topLeft != -1 && bottomRight != -1 && center != -1);
+        boolean rowEqual = rowFull && (topLeft == center&& topLeft == bottomRight);
+
+        boolean colFull = (topRight != -1 && center != -1 && bottomLeft != -1);
+        boolean colEqual = colFull && (topRight== center && topRight == bottomLeft);
+
+        if (rowEqual||colEqual)
+        {
+            currentWinner = center;
+            System.out.println("gameover");
+
             return true;
+        }
 
         return false;
     }
@@ -127,16 +145,16 @@ public class GameBoardTwoPlayer implements IGameModel {
      */
     @Override
     public int getWinner() {
-        //TODO Implement this method
-        return -1;
+        return currentWinner;
     }
+
 
     /**
      * Resets the game to a new game state.
      */
     @Override
     public void newGame() {
-        //TODO Implement this method
+        currentWinner = -1;
         for (int i = 0; i < 3; i++)
         {
             for (int k = 0; k < 3; k++)

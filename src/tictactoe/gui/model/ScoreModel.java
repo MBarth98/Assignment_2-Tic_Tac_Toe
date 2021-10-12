@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class ScoreModel {
 
-    private final ObservableList<String> winners;
+    public final ObservableList<String> winners;
 
 
     public ScoreModel() {

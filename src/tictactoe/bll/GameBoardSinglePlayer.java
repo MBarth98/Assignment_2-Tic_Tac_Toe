@@ -10,6 +10,8 @@ private int CountRound = 0;
     int[][] GameBoardMatrix = new int[3][3];
     IAiModel aiModel;
 
+private int currentWinner = -1;
+
     protected GameBoardSinglePlayer() {
         newGame();
     }
@@ -42,10 +44,6 @@ private int CountRound = 0;
      */
     @Override
     public boolean play(int col, int row) {
-        //TODO Implement this method
-
-
-        //TODO Implement this method
 
         if (currentPlayer == 0 && getPlayerAt(col,row) == -1){
             GameBoardMatrix[col][row] = 0;
@@ -72,9 +70,60 @@ private int CountRound = 0;
      */
     @Override
     public boolean isGameOver() {
-        //TODO Implement this method
+
+        for (int i = 0; i < 3; i++)
+        {
+            int left    = GameBoardMatrix[i][0];
+            int middle  = GameBoardMatrix[i][1];
+            int right   = GameBoardMatrix[i][2];
+
+            int top     = GameBoardMatrix[0][i];
+            int center  = GameBoardMatrix[1][i];
+            int bottom  = GameBoardMatrix[2][i];
+
+            boolean rowFull = (left != -1 && middle != -1 && right != -1);
+            boolean rowEqual = rowFull && (left == middle && left == right);
+
+            boolean colFull = (top != -1 && center != -1 && bottom != -1);
+            boolean colEqual = colFull && (top == center && top == bottom);
+
+            if (rowEqual||colEqual)
+            {
+                currentWinner = left;
+                System.out.println("gameover");
+
+                return true;
+            }
+
+
+        }
+
+        int topLeft     = GameBoardMatrix[0][0];
+        int bottomRight = GameBoardMatrix[2][2];
+        int center      = GameBoardMatrix[1][1];
+
+        int topRight = GameBoardMatrix[2][0];
+        int bottomLeft = GameBoardMatrix[0][2];
+
+
+        boolean rowFull = (topLeft != -1 && bottomRight != -1 && center != -1);
+        boolean rowEqual = rowFull && (topLeft == center&& topLeft == bottomRight);
+
+        boolean colFull = (topRight != -1 && center != -1 && bottomLeft != -1);
+        boolean colEqual = colFull && (topRight== center && topRight == bottomLeft);
+
+        if (rowEqual||colEqual)
+        {
+            currentWinner = center;
+            System.out.println("gameover");
+
+            return true;
+        }
+
         return false;
     }
+
+
 
     /**
      * Gets the id of the winner, -1 if its a draw or if the game is still running.
@@ -83,8 +132,7 @@ private int CountRound = 0;
      */
     @Override
     public int getWinner() {
-        //TODO Implement this method
-        return -1;
+        return currentWinner;
     }
 
     /**
