@@ -102,36 +102,38 @@ public class GameBoardTwoPlayer implements IGameModel {
             boolean colFull = (top != -1 && center != -1 && bottom != -1);
             boolean colEqual = colFull && (top == center && top == bottom);
 
-            if (rowEqual)
+            if (rowEqual||colEqual)
             {
                 currentWinner = left;
                 System.out.println("gameover");
 
                 return true;
             }
-            else if (colEqual)
-            {
-                System.out.println("gameover");
-                currentWinner = top;
-                return true;
-            }
+
+
         }
 
+        int topLeft     = GameBoardMatrix[0][0];
+        int bottomRight = GameBoardMatrix[2][2];
+        int center      = GameBoardMatrix[1][1];
+
+        int topRight = GameBoardMatrix[2][0];
+        int bottomLeft = GameBoardMatrix[0][2];
 
 
-        //boolean topLeft     = GameBoardMatrix[0][0] == GameBoardMatrix[1][1];
-        //boolean bottomRight = GameBoardMatrix[0][0] == GameBoardMatrix[2][2];
-        //boolean center      = GameBoardMatrix[1][1] == GameBoardMatrix[2][2];
-//
-        //if (topLeft && bottomRight && center)
-        //    return true;
-//
-        //boolean xy = GameBoardMatrix[2][0]==GameBoardMatrix[1][1];
-        //boolean xz = GameBoardMatrix[2][0]==GameBoardMatrix[0][2];
-        //boolean yz = GameBoardMatrix[1][1]==GameBoardMatrix[0][2];
-//
-        //if (xy && xz && yz)
-        //    return true;
+        boolean rowFull = (topLeft != -1 && bottomRight != -1 && center != -1);
+        boolean rowEqual = rowFull && (topLeft == center&& topLeft == bottomRight);
+
+        boolean colFull = (topRight != -1 && center != -1 && bottomLeft != -1);
+        boolean colEqual = colFull && (topRight== center && topRight == bottomLeft);
+
+        if (rowEqual||colEqual)
+        {
+            currentWinner = center;
+            System.out.println("gameover");
+
+            return true;
+        }
 
         return false;
     }
