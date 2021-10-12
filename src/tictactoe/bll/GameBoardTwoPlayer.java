@@ -9,6 +9,8 @@ public class GameBoardTwoPlayer implements IGameModel {
 
     int[][] GameBoardMatrix = new int[3][3];
 
+    private int currentWinner = -1;
+
     private int currentPlayer = 0;
     private int CountRound = 0;
 
@@ -83,39 +85,54 @@ public class GameBoardTwoPlayer implements IGameModel {
      * @return true if the game is over, else it will return false.
      */
     @Override
-    public boolean isGameOver() {
+    public boolean isGameOver()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            int left    = GameBoardMatrix[i][0];
+            int middle  = GameBoardMatrix[i][1];
+            int right   = GameBoardMatrix[i][2];
 
-        for (int i =0; i <3;i++){
-            boolean xy= GameBoardMatrix[i][0]==GameBoardMatrix[i][1];
-            boolean xz= GameBoardMatrix[i][0]==GameBoardMatrix[i][2];
-            boolean yz= GameBoardMatrix[i][1]==GameBoardMatrix[i][2];
+            int top     = GameBoardMatrix[0][i];
+            int center  = GameBoardMatrix[1][i];
+            int bottom  = GameBoardMatrix[2][i];
 
-           if (xy && xz && yz)
-               return true;
-        }
-        for (int i =0; i <3;i++) {
-            boolean xy = GameBoardMatrix[0][i] == GameBoardMatrix[1][i];
-            boolean xz = GameBoardMatrix[0][i] == GameBoardMatrix[2][i];
-            boolean yz = GameBoardMatrix[1][i] == GameBoardMatrix[2][i];
+            boolean rowFull = (left != -1 && middle != -1 && right != -1);
+            boolean rowEqual = rowFull && (left == middle && left == right);
 
-            if (xy && xz && yz)
+            boolean colFull = (top != -1 && center != -1 && bottom != -1);
+            boolean colEqual = colFull && (top == center && top == bottom);
+
+            if (rowEqual)
+            {
+                currentWinner = left;
+                System.out.println("gameover");
+
                 return true;
-
+            }
+            else if (colEqual)
+            {
+                System.out.println("gameover");
+                currentWinner = top;
+                return true;
+            }
         }
 
-            boolean xy= GameBoardMatrix[0][0]==GameBoardMatrix[1][1];
-            boolean xz= GameBoardMatrix[0][0]==GameBoardMatrix[2][2];
-            boolean yz= GameBoardMatrix[1][1]==GameBoardMatrix[2][2];
 
-            if (xy && xz && yz)
-                return true;
 
-         xy= GameBoardMatrix[2][0]==GameBoardMatrix[1][1];
-         xz= GameBoardMatrix[2][0]==GameBoardMatrix[0][2];
-         yz= GameBoardMatrix[1][1]==GameBoardMatrix[0][2];
-
-        if (xy && xz && yz)
-            return true;
+        //boolean topLeft     = GameBoardMatrix[0][0] == GameBoardMatrix[1][1];
+        //boolean bottomRight = GameBoardMatrix[0][0] == GameBoardMatrix[2][2];
+        //boolean center      = GameBoardMatrix[1][1] == GameBoardMatrix[2][2];
+//
+        //if (topLeft && bottomRight && center)
+        //    return true;
+//
+        //boolean xy = GameBoardMatrix[2][0]==GameBoardMatrix[1][1];
+        //boolean xz = GameBoardMatrix[2][0]==GameBoardMatrix[0][2];
+        //boolean yz = GameBoardMatrix[1][1]==GameBoardMatrix[0][2];
+//
+        //if (xy && xz && yz)
+        //    return true;
 
         return false;
     }
@@ -136,7 +153,9 @@ public class GameBoardTwoPlayer implements IGameModel {
      */
     @Override
     public void newGame() {
-        //TODO Implement this method
+
+
+        currentWinner = -1;
         for (int i = 0; i < 3; i++)
         {
             for (int k = 0; k < 3; k++)
