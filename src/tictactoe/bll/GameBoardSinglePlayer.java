@@ -10,13 +10,7 @@ private int CountRound = 0;
     int[][] GameBoardMatrix = new int[3][3];
 
     protected GameBoardSinglePlayer() {
-        for (int i = 0; i < 3; i++)
-        {
-            for (int k = 0; k < 3; k++)
-            {
-                GameBoardMatrix[i][k] = -1;
-            }
-        }
+        newGame();
     }
 
     /**
@@ -55,17 +49,14 @@ private int CountRound = 0;
         if (currentPlayer == 0 && getPlayerAt(col,row) == -1){
             GameBoardMatrix[col][row] = 0;
             CountRound++;
-            SingleAIDumDum();
-            CountRound++;
+            if (!checkBoardIsFull()){
+                SingleAIDumDum();
+                CountRound++;
+            }
             return true;
-        }
-        
 
-        if (col == 1){
-            System.out.println("Placed");
-
-            return true;
         }
+
         System.out.println("Something went wrong");
 
         return false;
@@ -99,12 +90,14 @@ private int CountRound = 0;
      */
     @Override
     public void newGame() {
+        currentPlayer = 0;
+        CountRound = 0;
         for (int i = 0; i < 3; i++)
         {
             for (int k = 0; k < 3; k++)
             {
-                System.out.println(GameBoardMatrix[i][k]);
                 GameBoardMatrix[i][k] = -1;
+                System.out.println(GameBoardMatrix[i][k]);
             }
         }
     }
@@ -120,7 +113,11 @@ private int CountRound = 0;
     public int getPlayerAt(int col, int row) {
         return GameBoardMatrix[col][row];
     }
-
+    /**
+     * Ai thats takes a random spot on the map.
+     *
+     *  it use 2 random number generator one for row other for colum and checks if that spot is 1 or 0 then it is taken if it is -1 it will place it there.
+     */
     public void SingleAIDumDum(){
         int max = 2;
         int min = 0;
@@ -136,5 +133,32 @@ private int CountRound = 0;
         {
             GameBoardMatrix[row][colum] = 1;
         }
+    }
+
+    /**
+     * Check if the the boards is full, AI uses it to stop itself from trying to fing a empty spot.
+     *
+     * @return it returns true if the boards is full it counts steady op to 8 (it counts 0 as 1) if tempCount is not 8 it returns false so the AI can still place.
+     */
+    public boolean checkBoardIsFull()
+    {
+        int tempCount = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                if (GameBoardMatrix[i][k] == 1 || GameBoardMatrix[i][k] == 0)
+                {
+                    if (tempCount == 8)
+                    {
+                        return true;
+                    }
+                    tempCount++;
+                }
+                System.out.println(tempCount);
+            }
+        }
+        System.out.println(tempCount);
+        return false;
     }
 }
