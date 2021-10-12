@@ -14,7 +14,9 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
+import tictactoe.bll.AiFactory;
 import tictactoe.bll.GameBoardFactory;
+import tictactoe.bll.IAiModel;
 import tictactoe.bll.IGameModel;
 import tictactoe.gui.model.ScoreModel;
 
@@ -27,6 +29,9 @@ import java.util.ResourceBundle;
 public class TicTacViewController implements Initializable {
     @FXML
     private ChoiceBox<GameBoardFactory.GAME_MODE> choicePlayMode;
+
+    @FXML
+    private ChoiceBox<AiFactory.AI_DIFF> choiceAiDiff;
 
     @FXML
     private ListView<String> lstScores;
@@ -46,6 +51,7 @@ public class TicTacViewController implements Initializable {
     private static final String TXT_PLAYER = "Player: ";
 
     private GameBoardFactory.GAME_MODE currentGameMode;
+    private AiFactory.AI_DIFF currentAiDiff;
     private IGameModel game;
     private ScoreModel scoreModel;
 
@@ -59,6 +65,10 @@ public class TicTacViewController implements Initializable {
         choicePlayMode.getItems().addAll(GameBoardFactory.GAME_MODE.values());
         choicePlayMode.getSelectionModel().selectLast();
         currentGameMode = choicePlayMode.getSelectionModel().getSelectedItem();
+
+        choiceAiDiff.getItems().addAll(AiFactory.AI_DIFF.values());
+        choiceAiDiff.getSelectionModel().selectLast();
+        currentAiDiff = choiceAiDiff.getSelectionModel().getSelectedItem();
 
         game = GameBoardFactory.getGameModel(currentGameMode);
         setPlayer();
@@ -124,6 +134,15 @@ public class TicTacViewController implements Initializable {
      */
     @FXML
     private void handleNewGame(ActionEvent event) {
+        if (choicePlayMode.getSelectionModel().getSelectedItem() == GameBoardFactory.GAME_MODE.SINGLE_PLAYER)
+        {
+            choiceAiDiff.setDisable(false);
+            choiceAiDiff.setOpacity(100);
+        }
+        else {
+            choiceAiDiff.setDisable(true);
+            choiceAiDiff.setOpacity(0);
+        }
         if (currentGameMode == choicePlayMode.getSelectionModel().getSelectedItem()) {
             game.newGame();
         } else {

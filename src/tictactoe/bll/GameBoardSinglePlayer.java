@@ -8,6 +8,7 @@ public class GameBoardSinglePlayer implements IGameModel {
 private int currentPlayer = 0;
 private int CountRound = 0;
     int[][] GameBoardMatrix = new int[3][3];
+    IAiModel aiModel;
 
     protected GameBoardSinglePlayer() {
         newGame();
@@ -50,7 +51,8 @@ private int CountRound = 0;
             GameBoardMatrix[col][row] = 0;
             CountRound++;
             if (!checkBoardIsFull()){
-                SingleAIDumDum();
+                //SingleAIDumDum();
+                aiModel.makeMove(GameBoardMatrix);
                 CountRound++;
             }
             return true;
@@ -90,6 +92,7 @@ private int CountRound = 0;
      */
     @Override
     public void newGame() {
+        aiModel = AiFactory.createAI(AiFactory.AI_DIFF.DUMDUM_AI);
         currentPlayer = 0;
         CountRound = 0;
         for (int i = 0; i < 3; i++)
@@ -112,27 +115,6 @@ private int CountRound = 0;
     @Override
     public int getPlayerAt(int col, int row) {
         return GameBoardMatrix[col][row];
-    }
-    /**
-     * Ai thats takes a random spot on the map.
-     *
-     *  it use 2 random number generator one for row other for colum and checks if that spot is 1 or 0 then it is taken if it is -1 it will place it there.
-     */
-    public void SingleAIDumDum(){
-        int max = 2;
-        int min = 0;
-        int range = max - min +1;
-        int row = (int) (Math.random() * range) +min;
-        int colum = (int) (Math.random() * range) + min;
-        while (GameBoardMatrix[row][colum] != -1)
-        {
-            row = (int) (Math.random() * range) +min;
-            colum = (int) (Math.random() * range) + min;
-        }
-        if (GameBoardMatrix[row][colum] == -1)
-        {
-            GameBoardMatrix[row][colum] = 1;
-        }
     }
 
     /**
