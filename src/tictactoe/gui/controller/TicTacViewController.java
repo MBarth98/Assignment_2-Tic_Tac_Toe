@@ -55,7 +55,7 @@ public class TicTacViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         scoreModel = new ScoreModel();
-        lstScores.setItems(scoreModel.getWinners());
+        lstScores.setItems(scoreModel.getWinners("player 1"));
         choicePlayMode.getItems().addAll(GameBoardFactory.GAME_MODE.values());
         choicePlayMode.getSelectionModel().selectLast();
         currentGameMode = choicePlayMode.getSelectionModel().getSelectedItem();
@@ -81,7 +81,7 @@ public class TicTacViewController implements Initializable {
                 if (game.isGameOver()) {
                     int winner = game.getWinner();
                     displayWinner(winner);
-                    scoreModel.setNextWinner(winner + "");
+                    scoreModel.AddNextWinner(winner + "");
                 } else {
                     setPlayer();
                 }
