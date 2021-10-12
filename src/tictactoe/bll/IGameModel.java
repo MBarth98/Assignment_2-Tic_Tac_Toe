@@ -8,7 +8,14 @@ package tictactoe.bll;
 /**
  * @author Stegger
  */
-public interface IGameModel {
+public interface IGameModel
+{
+    int EMPTY_PLAYER_ID = -1;
+    int PLAYER_ONE_ID = 0;
+    int PLAYER_TWO_ID = 1;
+
+    int GAMEBOARD_LENGHT = 3;
+    int GAMEBOARD_HEIGHT = 3;
 
     /**
      * Returns 0 for player 0, 1 for player 1.
