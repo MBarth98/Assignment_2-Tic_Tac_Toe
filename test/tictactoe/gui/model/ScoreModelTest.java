@@ -14,9 +14,9 @@ class ScoreModelTest {
         int expectedLength = 1;
         String winner = "Peter";
 
-        instance.setNextWinner(winner);
+        instance.AddNextWinner(winner);
 
-        int result = instance.getWinners().size();
+        int result = instance.getWinners("player 1").size();
         Assertions.assertEquals(expectedLength, result);
     }
 
@@ -30,10 +30,10 @@ class ScoreModelTest {
         String winnerOne = "Peter";
         String winnerTwo = "Jeppe";
 
-        instance.setNextWinner(winnerOne);
-        instance.setNextWinner(winnerTwo);
+        instance.AddNextWinner(winnerOne);
+        instance.AddNextWinner(winnerTwo);
 
-        String actualTopWinner = instance.getWinners().get(0);
+        String actualTopWinner = instance.getWinners("player 1").get(0);
         Assertions.assertEquals(winnerTwo, actualTopWinner);
     }
 
