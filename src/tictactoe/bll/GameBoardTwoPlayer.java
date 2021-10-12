@@ -9,8 +9,10 @@ public class GameBoardTwoPlayer implements IGameModel {
 
     int[][] GameBoardMatrix = new int[3][3];
 
+    public int currentWinner = -1;
     private int currentPlayer = 0;
     private int CountRound = 0;
+    private int Draw;
 
 
     protected GameBoardTwoPlayer() {
@@ -52,8 +54,6 @@ public class GameBoardTwoPlayer implements IGameModel {
     @Override
     public boolean play(int col, int row) {
 
-
-        //TODO Implement this method
 
         if (currentPlayer == 0 && getPlayerAt(col,row) == -1){
             GameBoardMatrix[col][row] = 0;
@@ -127,16 +127,16 @@ public class GameBoardTwoPlayer implements IGameModel {
      */
     @Override
     public int getWinner() {
-        //TODO Implement this method
-        return -1;
+        return currentWinner;
     }
+
 
     /**
      * Resets the game to a new game state.
      */
     @Override
     public void newGame() {
-        //TODO Implement this method
+
         for (int i = 0; i < 3; i++)
         {
             for (int k = 0; k < 3; k++)

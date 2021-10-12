@@ -41,10 +41,6 @@ private int CountRound = 0;
      */
     @Override
     public boolean play(int col, int row) {
-        //TODO Implement this method
-
-
-        //TODO Implement this method
 
         if (currentPlayer == 0 && getPlayerAt(col,row) == -1){
             GameBoardMatrix[col][row] = 0;
