@@ -18,7 +18,8 @@ public class ScoreModel {
         return winners;
     }
 
-    public void AddNextWinner(String winner) {
+    public void AddNextWinner(String winner)
+    {
        if (winner.equals("-1")) {
            winners.add("Draw");
        }
@@ -27,6 +28,10 @@ public class ScoreModel {
        }
        else if (winner.equals("1")) {
            winners.add("Player 1");
+       }
+       else
+       {
+           winners.add(winner);
        }
     }
 

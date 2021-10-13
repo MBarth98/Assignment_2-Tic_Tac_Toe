@@ -16,7 +16,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import tictactoe.bll.AiFactory;
 import tictactoe.bll.GameBoardFactory;
-import tictactoe.bll.IAiModel;
 import tictactoe.bll.IGameModel;
 import tictactoe.gui.model.ScoreModel;
 
@@ -31,7 +30,7 @@ public class TicTacViewController implements Initializable {
     private ChoiceBox<GameBoardFactory.GAME_MODE> choicePlayMode;
 
     @FXML
-    private ChoiceBox<AiFactory.AI_DIFF> choiceAiDiff;
+    private ChoiceBox<AiFactory.AI_TYPES> choiceAiDiff;
 
     @FXML
     private ListView<String> lstScores;
@@ -51,7 +50,7 @@ public class TicTacViewController implements Initializable {
     private static final String TXT_PLAYER = "Player: ";
 
     private GameBoardFactory.GAME_MODE currentGameMode;
-    private AiFactory.AI_DIFF currentAiDiff;
+    private AiFactory.AI_TYPES currentAiDiff;
     private IGameModel game;
     private ScoreModel scoreModel;
 
@@ -66,7 +65,7 @@ public class TicTacViewController implements Initializable {
         choicePlayMode.getSelectionModel().selectLast();
         currentGameMode = choicePlayMode.getSelectionModel().getSelectedItem();
 
-        choiceAiDiff.getItems().addAll(AiFactory.AI_DIFF.values());
+        choiceAiDiff.getItems().addAll(AiFactory.AI_TYPES.values());
         choiceAiDiff.getSelectionModel().selectLast();
         currentAiDiff = choiceAiDiff.getSelectionModel().getSelectedItem();
 
@@ -86,7 +85,6 @@ public class TicTacViewController implements Initializable {
             Integer col = GridPane.getColumnIndex((Node) event.getSource());
             int r = (row == null) ? 0 : row;
             int c = (col == null) ? 0 : col;
-            System.out.println(c + " " + r);
             if (game.play(c, r)) {
                 if (game.isGameOver()) {
                     int winner = game.getWinner();
@@ -103,7 +101,7 @@ public class TicTacViewController implements Initializable {
     }
 
     /**
-     * This method will update the user interface buy asking the GameBoard for who have played the individual field.
+     * This method will update the user interface by asking the GameBoard for who have played the individual field.
      * This is necessary when playing the single player game.
      */
     private void updateGameBoardButtons() {
@@ -133,22 +131,31 @@ public class TicTacViewController implements Initializable {
      * @param event The action event performed by the user.
      */
     @FXML
-    private void handleNewGame(ActionEvent event) {
+    private void handleNewGame(ActionEvent event)
+    {
         if (choicePlayMode.getSelectionModel().getSelectedItem() == GameBoardFactory.GAME_MODE.SINGLE_PLAYER)
         {
             choiceAiDiff.setDisable(false);
             choiceAiDiff.setOpacity(100);
         }
-        else {
+        else
+        {
             choiceAiDiff.setDisable(true);
             choiceAiDiff.setOpacity(0);
         }
-        if (currentGameMode == choicePlayMode.getSelectionModel().getSelectedItem()) {
+
+        if (currentGameMode == choicePlayMode.getSelectionModel().getSelectedItem())
+        {
             game.newGame();
-        } else {
+        }
+        else
+        {
             currentGameMode = choicePlayMode.getSelectionModel().getSelectedItem();
             game = GameBoardFactory.getGameModel(currentGameMode);
+
+            AiFactory.setInstance(AiFactory.AI_TYPES.CLEVER_AI);
         }
+
         setPlayer();
         clearBoard();
     }
@@ -156,7 +163,8 @@ public class TicTacViewController implements Initializable {
     /**
      * Updates the label displaying who's turn it is.
      */
-    private void setPlayer() {
+    private void setPlayer()
+    {
         lblPlayer.setText(TXT_PLAYER + game.getNextPlayer());
     }
 
