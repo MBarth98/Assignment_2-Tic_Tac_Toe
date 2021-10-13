@@ -2,14 +2,20 @@ package tictactoe.bll;
 
 public class AiFactory
 {
-    public static IAiModel createAI(AiFactory.AI_DIFF AiDiff) {
+    public static IAiModel createAI(AI_TYPES AiDiff) {
         return switch (AiDiff) {
             case DUMDUM_AI -> new DumDumAI();
             case CLEVER_AI -> new CleverAI();
         };
     }
 
-    public enum AI_DIFF {
+    public static IAiModel createAI()
+    {
+        return instance;
+    }
+
+    public enum AI_TYPES
+    {
         DUMDUM_AI, CLEVER_AI;
 
         @Override
@@ -19,5 +25,15 @@ public class AiFactory
                 case DUMDUM_AI -> "DUMDUM AI";
             };
         }
+    }
+
+    private static IAiModel instance;
+
+    public static void setInstance(AI_TYPES type)
+    {
+        instance = switch (type) {
+            case DUMDUM_AI -> new DumDumAI();
+            case CLEVER_AI -> new CleverAI();
+        };
     }
 }
