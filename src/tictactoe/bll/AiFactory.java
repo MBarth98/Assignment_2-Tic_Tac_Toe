@@ -6,6 +6,7 @@ public class AiFactory
         return switch (AiDiff) {
             case DUMDUM_AI -> new DumDumAI();
             case CLEVER_AI -> new CleverAI();
+            case CHEATING_AI -> new CheatingAI();
         };
     }
 
@@ -16,13 +17,14 @@ public class AiFactory
 
     public enum AI_TYPES
     {
-        DUMDUM_AI, CLEVER_AI;
+        DUMDUM_AI, CLEVER_AI, CHEATING_AI;
 
         @Override
         public String toString() {
             return switch (this) {
                 case CLEVER_AI -> "Clever AI";
                 case DUMDUM_AI -> "DUMDUM AI";
+                case CHEATING_AI -> "CHEATING AI";
             };
         }
     }
@@ -34,6 +36,7 @@ public class AiFactory
         instance = switch (type) {
             case DUMDUM_AI -> new DumDumAI();
             case CLEVER_AI -> new CleverAI();
+            case CHEATING_AI -> new CheatingAI();
         };
     }
 }

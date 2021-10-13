@@ -51,6 +51,7 @@ public class TicTacViewController implements Initializable {
 
     private GameBoardFactory.GAME_MODE currentGameMode;
     private AiFactory.AI_TYPES currentAiDiff;
+    private IAiModel ai;
     private IGameModel game;
     private ScoreModel scoreModel;
 
@@ -69,6 +70,7 @@ public class TicTacViewController implements Initializable {
         choiceAiDiff.getSelectionModel().selectLast();
         currentAiDiff = choiceAiDiff.getSelectionModel().getSelectedItem();
 
+        ai = AiFactory.createAI(currentAiDiff);
         game = GameBoardFactory.getGameModel(currentGameMode);
         setPlayer();
     }
@@ -143,13 +145,20 @@ public class TicTacViewController implements Initializable {
             choiceAiDiff.setDisable(true);
             choiceAiDiff.setOpacity(0);
         }
-
-        if (currentGameMode == choicePlayMode.getSelectionModel().getSelectedItem())
-        {
-            game.newGame();
-        }
-        else
-        {
+        if (currentGameMode == choicePlayMode.getSelectionModel().getSelectedItem()) {
+            if (choiceAiDiff.getSelectionModel().getSelectedItem() == AiFactory.AI_TYPES.DUMDUM_AI) {
+                AiFactory.setInstance(AiFactory.AI_TYPES.DUMDUM_AI);
+                game.newGame();
+            }
+            else if (choiceAiDiff.getSelectionModel().getSelectedItem() == AiFactory.AI_TYPES.CLEVER_AI){
+                AiFactory.setInstance(AiFactory.AI_TYPES.CLEVER_AI);
+                game.newGame();
+            }
+            else if (choiceAiDiff.getSelectionModel().getSelectedItem() == AiFactory.AI_TYPES.CHEATING_AI){
+                AiFactory.setInstance(AiFactory.AI_TYPES.CHEATING_AI);
+                game.newGame();
+            }
+        } else {
             currentGameMode = choicePlayMode.getSelectionModel().getSelectedItem();
             game = GameBoardFactory.getGameModel(currentGameMode);
 

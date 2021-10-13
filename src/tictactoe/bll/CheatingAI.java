@@ -1,8 +1,7 @@
 package tictactoe.bll;
 
-public class CleverAI implements IAiModel
+public class CheatingAI implements IAiModel
 {
-
     @Override
     public void makeMove(int [][] gameBoard)
     {
@@ -24,7 +23,7 @@ public class CleverAI implements IAiModel
             boolean colHalf = (top != -1 && center != -1);
             boolean colSHalf = (center != -1 && bottom != -1);
             boolean colEqual = colHalf && (top == center);
-            boolean colSEqual = colSHalf && (center == bottom);
+            boolean colSEqual = colHalf && (center == bottom);
 
             if (rowEqual)
             {
@@ -66,6 +65,25 @@ public class CleverAI implements IAiModel
                     gameBoard[2][i] = 1;
                 }
             }
+            else
+            {
+                int max = 2;
+                int min = 0;
+                int range = max - min +1;
+                int row = (int) (Math.random() * range) +min;
+                int colum = (int) (Math.random() * range) + min;
+                while (gameBoard[row][colum] != -1)
+                {
+                    row = (int) (Math.random() * range) +min;
+                    colum = (int) (Math.random() * range) + min;
+                }
+                if (gameBoard[row][colum] == -1)
+                {
+                    gameBoard[row][colum] = 1;
+                }
+            }
+
+
         }
 
         int topLeft     = gameBoard[0][0];
@@ -85,16 +103,6 @@ public class CleverAI implements IAiModel
         if (rowEqual||colEqual)
         {
 
-        }
-        else {
-            int max = 2;
-            int min = 0;
-            int range = max - min +1;
-            int row = (int) (Math.random() * range) +min;
-            int colum = (int) (Math.random() * range) + min;
-            if (gameBoard[row][colum] == -1){
-                gameBoard[row][colum] = 1;
-            }
         }
     }
 }

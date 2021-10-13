@@ -24,8 +24,7 @@ public class GameBoardSinglePlayer extends AbstractGameBoard
 
                 if (getWinner() == EMPTY_PLAYER_ID)
                 {
-                    setCurrentPlayer(getNextPlayer());
-                    SingleAIDumDum();
+                    currentAI.makeMove(GameBoardMatrix);
                 }
                 return true;
             }
