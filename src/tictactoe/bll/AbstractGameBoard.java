@@ -7,7 +7,7 @@ public abstract class AbstractGameBoard implements IGameModel
 
     protected int[][] GameBoardMatrix = new int[GAMEBOARD_LENGHT][GAMEBOARD_HEIGHT];
 
-    private IAiModel currentAI;
+    protected IAiModel currentAI;
 
     public int getCurrentPlayer()
     {
@@ -133,6 +133,7 @@ public abstract class AbstractGameBoard implements IGameModel
     public void newGame()
     {
         currentPlayer = EMPTY_PLAYER_ID;
+        currentAI = AiFactory.createAI();
 
         for (int i = 0; i < 3; i++)
         {

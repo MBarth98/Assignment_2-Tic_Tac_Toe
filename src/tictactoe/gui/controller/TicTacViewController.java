@@ -16,6 +16,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import tictactoe.bll.AiFactory;
 import tictactoe.bll.GameBoardFactory;
+import tictactoe.bll.IAiModel;
 import tictactoe.bll.IGameModel;
 import tictactoe.gui.model.ScoreModel;
 
