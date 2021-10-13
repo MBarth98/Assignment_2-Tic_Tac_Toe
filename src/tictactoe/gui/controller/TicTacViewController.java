@@ -31,7 +31,7 @@ public class TicTacViewController implements Initializable {
     private ChoiceBox<GameBoardFactory.GAME_MODE> choicePlayMode;
 
     @FXML
-    private ChoiceBox<AiFactory.AI_DIFF> choiceAiDiff;
+    private ChoiceBox<AiFactory.AI_TYPES> choiceAiDiff;
 
     @FXML
     private ListView<String> lstScores;
@@ -51,7 +51,8 @@ public class TicTacViewController implements Initializable {
     private static final String TXT_PLAYER = "Player: ";
 
     private GameBoardFactory.GAME_MODE currentGameMode;
-    private AiFactory.AI_DIFF currentAiDiff;
+    private AiFactory.AI_TYPES currentAiDiff;
+    private IAiModel ai;
     private IGameModel game;
     private ScoreModel scoreModel;
 
@@ -66,10 +67,11 @@ public class TicTacViewController implements Initializable {
         choicePlayMode.getSelectionModel().selectLast();
         currentGameMode = choicePlayMode.getSelectionModel().getSelectedItem();
 
-        choiceAiDiff.getItems().addAll(AiFactory.AI_DIFF.values());
+        choiceAiDiff.getItems().addAll(AiFactory.AI_TYPES.values());
         choiceAiDiff.getSelectionModel().selectLast();
         currentAiDiff = choiceAiDiff.getSelectionModel().getSelectedItem();
 
+        ai = AiFactory.createAI(currentAiDiff);
         game = GameBoardFactory.getGameModel(currentGameMode);
         setPlayer();
     }
@@ -144,7 +146,18 @@ public class TicTacViewController implements Initializable {
             choiceAiDiff.setOpacity(0);
         }
         if (currentGameMode == choicePlayMode.getSelectionModel().getSelectedItem()) {
-            game.newGame();
+            if (choiceAiDiff.getSelectionModel().getSelectedItem() == AiFactory.AI_TYPES.DUMDUM_AI) {
+                AiFactory.setInstance(AiFactory.AI_TYPES.DUMDUM_AI);
+                game.newGame();
+            }
+            else if (choiceAiDiff.getSelectionModel().getSelectedItem() == AiFactory.AI_TYPES.CLEVER_AI){
+                AiFactory.setInstance(AiFactory.AI_TYPES.CLEVER_AI);
+                game.newGame();
+            }
+            else if (choiceAiDiff.getSelectionModel().getSelectedItem() == AiFactory.AI_TYPES.CHEATING_AI){
+                AiFactory.setInstance(AiFactory.AI_TYPES.CHEATING_AI);
+                game.newGame();
+            }
         } else {
             currentGameMode = choicePlayMode.getSelectionModel().getSelectedItem();
             game = GameBoardFactory.getGameModel(currentGameMode);

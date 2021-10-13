@@ -11,6 +11,7 @@ public class GameBoardSinglePlayer implements IGameModel
     private int CountRound = 0;
     int[][] GameBoardMatrix = new int[GAMEBOARD_LENGHT][GAMEBOARD_HEIGHT];
     private int currentWinner = EMPTY_PLAYER_ID;
+    private IAiModel currentAI;
 
     protected GameBoardSinglePlayer()
     {
@@ -56,7 +57,7 @@ public class GameBoardSinglePlayer implements IGameModel
 
                 if (!checkBoardIsFull())
                 {
-                    SingleAIDumDum();
+                    currentAI.makeMove(GameBoardMatrix);
                     CountRound++;
                 }
                 return true;
@@ -137,6 +138,7 @@ public class GameBoardSinglePlayer implements IGameModel
     @Override
     public void newGame()
     {
+        currentAI = AiFactory.createAI();
         currentPlayer = PLAYER_ONE_ID;
         CountRound = 0;
 
