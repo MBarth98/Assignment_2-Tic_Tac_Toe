@@ -7,6 +7,8 @@ public abstract class AbstractGameBoard implements IGameModel
 
     protected int[][] GameBoardMatrix = new int[GAMEBOARD_LENGHT][GAMEBOARD_HEIGHT];
 
+    private IAiModel currentAI;
+
     public int getCurrentPlayer()
     {
         return currentPlayer;
