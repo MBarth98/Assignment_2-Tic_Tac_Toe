@@ -8,21 +8,21 @@ public class DumDumAI implements IAiModel
      *  it use 2 random number generator one for row other for colum and checks if that spot is 1 or 0 then it is taken if it is -1 it will place it there.
      */
     @Override
-    public void makeMove(int [][] gameBoard)
+    public void makeMove(int[][] gameBoard)
     {
-        int max = 2;
-        int min = 0;
-        int range = max - min +1;
-        int row = (int) (Math.random() * range) +min;
-        int colum = (int) (Math.random() * range) + min;
-        while (gameBoard[row][colum] != -1)
+        int column;
+        int row;
+
+        do
         {
-            row = (int) (Math.random() * range) +min;
-            colum = (int) (Math.random() * range) + min;
-        }
-        if (gameBoard[row][colum] == -1)
+            column  = (int)(Math.random() * gameBoard.length);
+            row     = (int)(Math.random() * gameBoard.length);
+
+        } while (gameBoard[column][row] != IGameModel.EMPTY_PLAYER_ID);
+
+        if (gameBoard[column][row] == IGameModel.EMPTY_PLAYER_ID)
         {
-            gameBoard[row][colum] = 1;
+            gameBoard[column][row] = IGameModel.PLAYER_TWO_ID;
         }
     }
 }
