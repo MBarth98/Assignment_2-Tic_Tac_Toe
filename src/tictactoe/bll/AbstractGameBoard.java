@@ -62,7 +62,8 @@ public abstract class AbstractGameBoard implements IGameModel
     @Override
     public boolean isGameOver()
     {
-        return (getWinner() != EMPTY_PLAYER_ID && !checkBoardIsFull());
+        boolean winByPartialBoard = getWinner() != EMPTY_PLAYER_ID;
+        return winByPartialBoard || isGameBoardFull();
     }
 
     private boolean isRowFullAndEqual(int index)
@@ -110,17 +111,17 @@ public abstract class AbstractGameBoard implements IGameModel
     @Override
     public int getWinner()
     {
+        if (isDiagonalFullAndEqual())
+        {
+            return currentPlayer;
+        }
+
         for (int i = 0; i < 3; i++)
         {
             if (isRowFullAndEqual(i) || isColumnFullAndEqual(i))
             {
                 return currentPlayer;
             }
-        }
-
-        if (isDiagonalFullAndEqual())
-        {
-            return currentPlayer;
         }
 
         return EMPTY_PLAYER_ID;
@@ -154,7 +155,6 @@ public abstract class AbstractGameBoard implements IGameModel
     @Override
     public int getPlayerAt(int col, int row)
     {
-        System.out.println("player at {" + col + ", " + row + "} is " + GameBoardMatrix[col][row]);
         return GameBoardMatrix[col][row];
     }
 
@@ -163,7 +163,7 @@ public abstract class AbstractGameBoard implements IGameModel
      *
      * @return it returns true if the boards is full it counts steady op to 8 (it counts 0 as 1) if tempCount is not 8 it returns false so the AI can still place.
      */
-    public boolean checkBoardIsFull()
+    public boolean isGameBoardFull()
     {
         for (int column = 0; column < GAMEBOARD_LENGHT; column++)
         {
@@ -175,7 +175,6 @@ public abstract class AbstractGameBoard implements IGameModel
                 }
             }
         }
-
         return true;
     }
 }

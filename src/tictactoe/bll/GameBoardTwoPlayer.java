@@ -15,10 +15,14 @@ public class GameBoardTwoPlayer extends AbstractGameBoard
     @Override
     public boolean play(int col, int row)
     {
-        setCurrentPlayer(getNextPlayer());
+        if (isGameOver())
+        {
+            return false;
+        }
 
         if (getPlayerAt(col, row) == EMPTY_PLAYER_ID)
         {
+            setCurrentPlayer(getNextPlayer());
             GameBoardMatrix[col][row] = getCurrentPlayer();
             return true;
         }

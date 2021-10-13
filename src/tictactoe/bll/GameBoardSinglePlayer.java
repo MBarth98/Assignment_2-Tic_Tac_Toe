@@ -14,6 +14,11 @@ public class GameBoardSinglePlayer extends AbstractGameBoard
     @Override
     public boolean play(int column, int row)
     {
+        if (isGameOver())
+        {
+            return false;
+        }
+
         setCurrentPlayer(getNextPlayer());
 
         if (getPlayerAt(column, row) == EMPTY_PLAYER_ID)
@@ -41,19 +46,6 @@ public class GameBoardSinglePlayer extends AbstractGameBoard
      */
     public void SingleAIDumDum()
     {
-        int column;
-        int row;
 
-        do
-        {
-            column  = (int)(Math.random() * GameBoardMatrix.length);
-            row     = (int)(Math.random() * GameBoardMatrix.length);
-
-        } while (GameBoardMatrix[column][row] != EMPTY_PLAYER_ID);
-
-        if (GameBoardMatrix[column][row] == EMPTY_PLAYER_ID)
-        {
-            GameBoardMatrix[column][row] = PLAYER_TWO_ID;
-        }
     }
 }

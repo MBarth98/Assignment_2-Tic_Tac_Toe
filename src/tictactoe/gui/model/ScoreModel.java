@@ -2,6 +2,7 @@ package tictactoe.gui.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import tictactoe.bll.IGameModel;
 
 import java.util.Objects;
 
@@ -20,18 +21,14 @@ public class ScoreModel {
 
     public void AddNextWinner(String winner)
     {
-       if (winner.equals("-1")) {
+       if (winner.equals(IGameModel.EMPTY_PLAYER_ID + "")) {
            winners.add("Draw");
        }
-       else if (winner.equals("0")) {
+       else if (winner.equals(IGameModel.PLAYER_ONE_ID + "")) {
            winners.add("Player 0");
        }
-       else if (winner.equals("1")) {
+       else if (winner.equals(IGameModel.PLAYER_TWO_ID + "")) {
            winners.add("Player 1");
-       }
-       else
-       {
-           winners.add(winner);
        }
     }
 
