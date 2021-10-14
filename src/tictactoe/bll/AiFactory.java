@@ -12,7 +12,7 @@ public class AiFactory
 
     public static IAiModel createAI()
     {
-        return instance;
+        return (instance == null) ? new CheatingAI() : instance;
     }
 
     public enum AI_TYPES
@@ -29,7 +29,7 @@ public class AiFactory
         }
     }
 
-    private static IAiModel instance;
+    private static IAiModel instance ;
 
     public static void setInstance(AI_TYPES type)
     {
