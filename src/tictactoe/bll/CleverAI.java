@@ -12,8 +12,6 @@ public class CleverAI implements IAiModel
     @Override
     public void makeMove(int[][] gameBoard)
     {
-        boolean firstry = false;
-
         int bestMoveX = 0;
         int bestMoveY = 0;
         int bestMoveValue = Integer.MAX_VALUE;
